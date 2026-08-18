@@ -1,0 +1,32 @@
+:root {
+  --text: #333844;
+  --text-h: #101319;
+  --bg: #f5f6f8;
+  --panel: #ffffff;
+  --border: #dfe2e8;
+  --accent: #1e6fd9;
+  --accent-hover: #1859ad;
+  --green: #17803d;
+  --orange: #e0662a;
+  --danger: #b3261e;
+
+  font: 15px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+h1, h2, h3 {
+  color: var(--text-h);
+  font-weight: 600;
+}
