@@ -1,5 +1,5 @@
 export interface CardRecord {
-  rowIndex: number
+  id: number
   fullName: string
   defaultPin: string
   accountNumber: string
@@ -7,9 +7,10 @@ export interface CardRecord {
   gsapNo: string
   caregiver: string
   school: string
+  lga: string
   done: boolean
-  /** Any other columns from the sheet, kept around for on-screen verification. */
-  extra: { label: string; value: string }[]
+  doneAt: string | null
+  doneBy: string | null
 }
 
 export interface SearchCriteria {

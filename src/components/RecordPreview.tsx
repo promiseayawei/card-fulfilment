@@ -2,7 +2,8 @@ import type { CardRecord } from '../types'
 
 interface Props {
   record: CardRecord | null
-  onPrintThis: (rowIndex: number) => void
+  loading: boolean
+  onPrintThis: (id: number) => void
 }
 
 function Row({ label, value }: { label: string; value: string }) {
@@ -14,7 +15,15 @@ function Row({ label, value }: { label: string; value: string }) {
   )
 }
 
-export default function RecordPreview({ record, onPrintThis }: Props) {
+export default function RecordPreview({ record, loading, onPrintThis }: Props) {
+  if (loading) {
+    return (
+      <div className="record-preview record-preview-empty">
+        <p>Loading record…</p>
+      </div>
+    )
+  }
+
   if (!record) {
     return (
       <div className="record-preview record-preview-empty">
@@ -37,11 +46,9 @@ export default function RecordPreview({ record, onPrintThis }: Props) {
         <Row label="Gsap No." value={record.gsapNo} />
         <Row label="Caregiver" value={record.caregiver} />
         <Row label="School" value={record.school} />
-        {record.extra.map((f) => (
-          <Row key={f.label} label={f.label} value={f.value} />
-        ))}
+        <Row label="LGA" value={record.lga} />
       </div>
-      <button type="button" className="btn-primary" onClick={() => onPrintThis(record.rowIndex)}>
+      <button type="button" className="btn-primary" onClick={() => onPrintThis(record.id)}>
         Print this record
       </button>
     </div>

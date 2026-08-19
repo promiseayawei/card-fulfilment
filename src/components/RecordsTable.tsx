@@ -3,14 +3,14 @@ import type { CardRecord } from '../types'
 interface Props {
   records: CardRecord[]
   selected: Set<number>
-  previewIndex: number | null
-  onToggle: (rowIndex: number) => void
+  previewId: number | null
+  onToggle: (id: number) => void
   onToggleAll: () => void
-  onPreview: (rowIndex: number) => void
+  onPreview: (id: number) => void
 }
 
-export default function RecordsTable({ records, selected, previewIndex, onToggle, onToggleAll, onPreview }: Props) {
-  const allSelected = records.length > 0 && records.every((r) => selected.has(r.rowIndex))
+export default function RecordsTable({ records, selected, previewId, onToggle, onToggleAll, onPreview }: Props) {
+  const allSelected = records.length > 0 && records.every((r) => selected.has(r.id))
 
   return (
     <div className="table-wrap">
@@ -31,15 +31,15 @@ export default function RecordsTable({ records, selected, previewIndex, onToggle
         <tbody>
           {records.map((r) => (
             <tr
-              key={r.rowIndex}
-              className={[r.done ? 'row-done' : '', r.rowIndex === previewIndex ? 'row-active' : ''].join(' ').trim()}
-              onClick={() => onPreview(r.rowIndex)}
+              key={r.id}
+              className={[r.done ? 'row-done' : '', r.id === previewId ? 'row-active' : ''].join(' ').trim()}
+              onClick={() => onPreview(r.id)}
             >
               <td className="col-check" onClick={(e) => e.stopPropagation()}>
                 <input
                   type="checkbox"
-                  checked={selected.has(r.rowIndex)}
-                  onChange={() => onToggle(r.rowIndex)}
+                  checked={selected.has(r.id)}
+                  onChange={() => onToggle(r.id)}
                   aria-label={`Select ${r.fullName}`}
                 />
               </td>

@@ -5,7 +5,6 @@ interface Props {
   criteria: SearchCriteria
   onChange: (criteria: SearchCriteria) => void
   resultCount: number
-  totalCount: number
 }
 
 const FIELDS: { key: keyof SearchCriteria; label: string; placeholder: string }[] = [
@@ -16,7 +15,7 @@ const FIELDS: { key: keyof SearchCriteria; label: string; placeholder: string }[
   { key: 'caregiver', label: 'Caregiver', placeholder: 'e.g. Mr. John Doe' },
 ]
 
-export default function SearchPanel({ criteria, onChange, resultCount, totalCount }: Props) {
+export default function SearchPanel({ criteria, onChange, resultCount }: Props) {
   return (
     <div className="search-panel">
       <div className="search-grid">
@@ -33,9 +32,7 @@ export default function SearchPanel({ criteria, onChange, resultCount, totalCoun
         ))}
       </div>
       <div className="search-meta">
-        <span>
-          {resultCount} of {totalCount} record{totalCount === 1 ? '' : 's'} match
-        </span>
+        <span>{resultCount} record{resultCount === 1 ? '' : 's'}</span>
         <button type="button" className="btn-link" onClick={() => onChange(emptyCriteria)}>
           Clear filters
         </button>

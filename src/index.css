@@ -10,6 +10,15 @@
   --orange: #e0662a;
   --danger: #b3261e;
 
+  /* Printable guide palette — sampled/derived from the Kegow brand assets */
+  --guide-ink: #23262e;
+  --guide-muted: #5b6270;
+  --guide-green: #223732;
+  --guide-accent: #1b5fae;
+  --guide-accent-soft: rgba(27, 95, 174, 0.07);
+  --guide-accent-line: rgba(27, 95, 174, 0.2);
+  --guide-orange: #c75a15;
+
   font: 15px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
   color: var(--text);
   background: var(--bg);

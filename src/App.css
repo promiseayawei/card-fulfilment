@@ -170,6 +170,27 @@
   flex: 1;
 }
 
+.import-progress {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: #eef0f4;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
 .file-loader-bar {
   display: flex;
   align-items: center;
@@ -265,15 +286,6 @@
   margin-top: 12px;
   font-size: 13px;
   color: #5b6270;
-}
-
-.search-prompt {
-  padding: 40px 16px;
-  text-align: center;
-  color: #8a8f99;
-  border: 1px dashed var(--border);
-  border-radius: 10px;
-  background: var(--panel);
 }
 
 /* ---------- Toolbar ---------- */
@@ -441,6 +453,15 @@
   z-index: 10;
 }
 
+.printer-select {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  min-width: 220px;
+}
+
 /* ---------- Printable guide ---------- */
 .guide-page {
   background: #fff;
@@ -449,144 +470,185 @@
   padding: 36px 44px;
   border: 1px solid var(--border);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  color: var(--guide-ink);
 }
 
 .guide-header {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
-.brand {
+.guide-header-top {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-.brand-mark {
-  color: var(--green);
-  font-size: 26px;
-  font-weight: 800;
+.brand-logo {
+  display: block;
+  width: 158px;
+  height: auto;
 }
 
-.brand-name {
-  color: var(--green);
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
+.card-sample {
+  display: block;
+  width: 168px;
+  height: auto;
+  margin-top: -8px;
 }
 
 .header-rule {
   height: 3px;
-  background: linear-gradient(to right, var(--accent) 0 70%, var(--orange) 70% 100%);
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--guide-accent) 0 65%, var(--guide-orange) 65% 100%);
   margin-top: 10px;
 }
 
 .guide-title {
-  font-size: 22px;
-  margin: 18px 0 14px;
-  letter-spacing: 0.3px;
+  font-size: 20px;
+  font-weight: 800;
+  margin: 14px 0 12px;
+  letter-spacing: 0.2px;
 }
 
 .title-blue {
-  color: var(--accent);
+  color: var(--guide-accent);
 }
 
 .title-orange {
-  color: var(--orange);
+  color: var(--guide-orange);
 }
 
 .salutation {
-  margin-bottom: 8px;
-  font-size: 14px;
+  margin-bottom: 7px;
+  font-size: 13.5px;
 }
 
 .intro {
-  font-size: 13px;
-  line-height: 1.55;
-  color: #3a3f48;
-  margin-bottom: 16px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--guide-muted);
+  margin-bottom: 14px;
 }
 
 .field-bar {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px 16px;
-  font-size: 12.5px;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 10px 0;
+  gap: 6px 16px;
+  font-size: 11.5px;
+  background: var(--guide-accent-soft);
+  border: 1px solid var(--guide-accent-line);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  padding: 10px 14px;
 }
 
 .field-bar-second {
   grid-template-columns: repeat(2, 1fr);
-  border-top: none;
+  border-bottom: 1px solid var(--guide-accent-line);
+  border-radius: 0 0 8px 8px;
 }
 
 .field-label {
   font-weight: 700;
+  color: var(--guide-accent);
+  text-transform: uppercase;
+  font-size: 0.82em;
+  letter-spacing: 0.3px;
+}
+
+.field-value {
+  font-weight: 600;
 }
 
 .guide-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 28px;
-  margin-top: 18px;
-  font-size: 12.5px;
+  gap: 26px;
+  margin-top: 16px;
+  font-size: 11.5px;
+  line-height: 1.42;
 }
 
 .guide-col h2 {
-  font-size: 14px;
-  color: var(--accent);
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--guide-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
   margin: 0 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--guide-accent-line);
 }
 
 .guide-col section {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .guide-col ol,
 .guide-col ul {
-  margin: 6px 0 0;
-  padding-left: 18px;
+  margin: 5px 0 0;
+  padding-left: 16px;
 }
 
 .guide-col li {
-  margin-bottom: 4px;
+  margin-bottom: 3px;
+}
+
+.guide-col ol li::marker {
+  color: var(--guide-accent);
+  font-weight: 700;
+}
+
+.guide-col ul li::marker {
+  color: var(--guide-orange);
 }
 
 .guide-footer {
-  margin-top: 24px;
-  border-top: 1px solid var(--border);
-  padding-top: 14px;
-  font-size: 12.5px;
+  margin-top: 20px;
+  border-top: 2px solid var(--guide-accent-line);
+  padding-top: 12px;
+  font-size: 11.5px;
+}
+
+.signature-img {
+  display: block;
+  width: 120px;
+  height: auto;
+  margin-top: 2px;
 }
 
 .signature {
   font-weight: 700;
-  margin-top: 4px;
+  margin-top: 2px;
+  color: var(--guide-green);
 }
 
 .footer-brands {
-  margin-top: 14px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: #5b6270;
+  gap: 14px;
 }
 
-.brand-name-sm {
-  color: var(--green);
-  font-weight: 800;
+.footer-logo {
+  display: block;
+  height: 20px;
+  width: auto;
 }
 
-.footer-sep {
-  color: #b6bac2;
-}
-
-.enetworks-name {
-  font-weight: 600;
+.footer-logo-square {
+  height: 30px;
 }
 
 /* ---------- Print media ---------- */
+@page {
+  size: A4;
+  margin: 10mm 12mm;
+}
+
 @media print {
   .no-print,
   .print-toolbar {
@@ -599,13 +661,107 @@
 
   .guide-page {
     margin: 0;
+    padding: 0;
     border: none;
     box-shadow: none;
     max-width: none;
+    width: auto;
+    font-size: 12px;
     page-break-after: always;
   }
 
   .guide-page:last-child {
     page-break-after: auto;
+  }
+
+  .guide-header {
+    margin-bottom: 6px;
+  }
+
+  .brand-logo {
+    width: 125px;
+  }
+
+  .card-sample {
+    width: 130px;
+    margin-top: -4px;
+  }
+
+  .header-rule {
+    height: 2px;
+    margin-top: 6px;
+  }
+
+  .guide-title {
+    font-size: 18px;
+    margin: 10px 0 9px;
+  }
+
+  .salutation {
+    margin-bottom: 6px;
+    font-size: 12.5px;
+  }
+
+  .intro {
+    font-size: 11px;
+    line-height: 1.4;
+    margin-bottom: 9px;
+  }
+
+  .field-bar {
+    gap: 4px 12px;
+    font-size: 10.5px;
+    padding: 7px 12px;
+  }
+
+  .guide-columns {
+    gap: 20px;
+    margin-top: 11px;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .guide-col h2 {
+    font-size: 11.5px;
+    margin: 0 0 4px;
+    padding-bottom: 3px;
+  }
+
+  .guide-col section {
+    margin-bottom: 8px;
+  }
+
+  .guide-col ol,
+  .guide-col ul {
+    margin: 3px 0 0;
+    padding-left: 14px;
+  }
+
+  .guide-col li {
+    margin-bottom: 1px;
+  }
+
+  .guide-footer {
+    margin-top: 10px;
+    padding-top: 8px;
+    font-size: 10px;
+  }
+
+  .signature-img {
+    width: 100px;
+  }
+
+  .footer-brands {
+    margin-top: 8px;
+    padding-top: 6px;
+    gap: 10px;
+  }
+
+  .footer-logo {
+    height: 16px;
+  }
+
+  .footer-logo-square {
+    height: 24px;
   }
 }

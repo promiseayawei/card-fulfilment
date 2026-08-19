@@ -13,9 +13,9 @@ export default function Template({ record }: { record: CardRecord }) {
   return (
     <div className="guide-page">
       <header className="guide-header">
-        <div className="brand">
-          <span className="brand-mark">›</span>
-          <span className="brand-name">kegow</span>
+        <div className="guide-header-top">
+          <img src="/kegow-logo.jpeg" className="brand-logo" alt="Kegow" />
+          <img src="/card-sample.png" className="card-sample" alt="Kegow Verve card sample" />
         </div>
         <div className="header-rule" />
       </header>
@@ -119,12 +119,11 @@ export default function Template({ record }: { record: CardRecord }) {
 
       <footer className="guide-footer">
         <p>Yours sincerely,</p>
+        <img src="/kegow-signature.png" className="signature-img" alt="Signature" />
         <p className="signature">Kegow (by Chamsmobile)</p>
         <div className="footer-brands">
-          <span className="brand-mark">›</span>
-          <span className="brand-name-sm">kegow</span>
-          <span className="footer-sep">×</span>
-          <span className="enetworks-name">E-Networks Technologies Ltd</span>
+          <img src="/kegow-logo.jpeg" className="footer-logo" alt="Kegow" />
+          <img src="/enetworks-logo.jpeg" className="footer-logo footer-logo-square" alt="E-Networks Technologies Ltd" />
         </div>
       </footer>
     </div>

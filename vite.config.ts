@@ -6,6 +6,9 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 // client-side) imports Node's `crypto` module; polyfill just that so the
 // password never has to leave the browser.
 export default defineConfig({
+  // Relative asset paths so the production build works loaded via file://
+  // from Electron (a plain http server, e.g. `npm run preview`, also fine).
+  base: './',
   plugins: [
     react(),
     nodePolyfills({

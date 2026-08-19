@@ -1,23 +1,26 @@
 import { useState, type FormEvent, type ReactNode } from 'react'
-
-const STORAGE_KEY = 'kegow-portal-unlocked'
-const EXPECTED_PIN = String(import.meta.env.VITE_ACCESS_PIN ?? '2468')
+import { ApiRequestError, getToken, login } from '../lib/api'
 
 export default function AccessGate({ children }: { children: ReactNode }) {
-  const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem(STORAGE_KEY) === '1')
+  const [unlocked, setUnlocked] = useState(() => !!getToken())
   const [pin, setPin] = useState('')
-  const [error, setError] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
 
   if (unlocked) return <>{children}</>
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    if (pin === EXPECTED_PIN) {
-      sessionStorage.setItem(STORAGE_KEY, '1')
+    setLoading(true)
+    setError(null)
+    try {
+      await login(pin)
       setUnlocked(true)
-    } else {
-      setError(true)
+    } catch (err) {
+      setError(err instanceof ApiRequestError ? err.message : 'Could not reach the server.')
       setPin('')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -33,13 +36,13 @@ export default function AccessGate({ children }: { children: ReactNode }) {
           value={pin}
           onChange={(e) => {
             setPin(e.target.value)
-            setError(false)
+            setError(null)
           }}
           placeholder="Access PIN"
         />
-        {error && <p className="access-error">Incorrect PIN.</p>}
-        <button type="submit" className="btn-primary">
-          Unlock
+        {error && <p className="access-error">{error}</p>}
+        <button type="submit" className="btn-primary" disabled={loading || !pin}>
+          {loading ? 'Checking…' : 'Unlock'}
         </button>
       </form>
     </div>
