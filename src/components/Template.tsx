@@ -127,7 +127,10 @@ export default function Template({ record }: { record: CardRecord }) {
         <div className="footer-brands">
           <img src="/kegow-logo.png" className="footer-logo" alt="Kegow" />
           <span className="footer-brands-divider" />
-          <img src="/enetworks-logo.jpeg" className="footer-logo footer-logo-square" alt="E-Networks Technologies Ltd" />
+          <div className="footer-brand-enetworks">
+            <img src="/enetworks-logo.jpeg" className="footer-logo footer-logo-square" alt="E-Networks Technologies Ltd" />
+            <span className="footer-brand-label">E-Networks Technologies Ltd</span>
+          </div>
         </div>
       </footer>
     </div>

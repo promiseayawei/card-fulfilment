@@ -18,6 +18,7 @@
   --guide-accent-soft: rgba(27, 95, 174, 0.07);
   --guide-accent-line: rgba(27, 95, 174, 0.2);
   --guide-orange: #c75a15;
+  --guide-red: #c8302b;
 
   font: 15px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
   color: var(--text);

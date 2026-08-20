@@ -707,6 +707,19 @@
   background: var(--border);
 }
 
+.footer-brand-enetworks {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-brand-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--guide-red);
+  letter-spacing: 0.2px;
+}
+
 /* ---------- Print media ---------- */
 @page {
   size: A4;
@@ -835,5 +848,9 @@
 
   .footer-logo-square {
     height: 18px;
+  }
+
+  .footer-brand-label {
+    font-size: 10.5px;
   }
 }
