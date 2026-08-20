@@ -79,7 +79,8 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
         ...options.headers,
       },
     })
-  } catch {
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') throw err
     throw new ApiRequestError('Could not reach the server. Check your connection and the API URL.', 0)
   }
 
@@ -159,12 +160,12 @@ export interface SearchResult {
   per_page: number
 }
 
-export function searchRecords(params: SearchParams): Promise<SearchResult> {
+export function searchRecords(params: SearchParams, signal?: AbortSignal): Promise<SearchResult> {
   const query = new URLSearchParams()
   for (const [key, value] of Object.entries(params)) {
     if (value !== undefined && value !== '') query.set(key, String(value))
   }
-  return request<SearchResult>(`/records?${query.toString()}`)
+  return request<SearchResult>(`/records?${query.toString()}`, { signal })
 }
 
 export function getRecord(id: number): Promise<ApiRecord> {

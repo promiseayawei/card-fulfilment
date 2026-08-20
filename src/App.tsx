@@ -63,20 +63,24 @@ export default function App() {
   // newer one. Empty criteria still searches — it just means "browse
   // everything, paginated" rather than "show nothing."
   useEffect(() => {
+    const controller = new AbortController()
     const mySeq = ++searchSeq.current
     const timer = setTimeout(
       () => {
         setSearching(true)
         setSearchError(null)
-        searchRecords({
-          full_name: criteria.fullName,
-          card_no: criteria.cardNo,
-          account_number: criteria.accountNumber,
-          school: criteria.school,
-          caregiver: criteria.caregiver,
-          page,
-          per_page: PER_PAGE,
-        })
+        searchRecords(
+          {
+            full_name: criteria.fullName,
+            card_no: criteria.cardNo,
+            account_number: criteria.accountNumber,
+            school: criteria.school,
+            caregiver: criteria.caregiver,
+            page,
+            per_page: PER_PAGE,
+          },
+          controller.signal,
+        )
           .then((res) => {
             if (searchSeq.current !== mySeq) return
             const mapped = res.data.map(toCardRecord)
@@ -85,6 +89,7 @@ export default function App() {
             cacheRecords(mapped)
           })
           .catch((err) => {
+            if (err instanceof DOMException && err.name === 'AbortError') return
             if (searchSeq.current !== mySeq) return
             setSearchError(err instanceof ApiRequestError ? err.message : 'Search failed.')
           })
@@ -94,7 +99,13 @@ export default function App() {
       },
       page === 1 ? 350 : 0,
     )
-    return () => clearTimeout(timer)
+    // Cancels both an unfired debounce timer and an in-flight request —
+    // whichever applies — so rapid typing doesn't pile up abandoned queries
+    // on the server.
+    return () => {
+      clearTimeout(timer)
+      controller.abort()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [criteria, page, refreshTick])
 
