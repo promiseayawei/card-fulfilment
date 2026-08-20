@@ -308,9 +308,12 @@ export default function App() {
               </button>
             </>
           ) : (
-            <button type="button" className="btn-primary" onClick={() => window.print()}>
-              Print now
-            </button>
+            <>
+              <button type="button" className="btn-primary" onClick={() => window.print()}>
+                Print now
+              </button>
+              <span className="hint print-hint">In the print dialog, turn off "Headers and footers" to remove the URL/date strip.</span>
+            </>
           )}
           <button type="button" className="btn-secondary" onClick={() => setPrintQueue(null)}>
             Cancel

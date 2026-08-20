@@ -77,6 +77,12 @@ export default function Template({ record }: { record: CardRecord }) {
               <li>Make in-store and online purchases.</li>
             </ol>
           </section>
+
+          <div className="guide-signoff">
+            <p>Yours sincerely,</p>
+            <img src="/kegow-signature.png" className="signature-img" alt="Signature" />
+            <p className="signature">Kegow (by Chamsmobile)</p>
+          </div>
         </div>
 
         <div className="guide-col">
@@ -118,11 +124,9 @@ export default function Template({ record }: { record: CardRecord }) {
       </div>
 
       <footer className="guide-footer">
-        <p>Yours sincerely,</p>
-        <img src="/kegow-signature.png" className="signature-img" alt="Signature" />
-        <p className="signature">Kegow (by Chamsmobile)</p>
         <div className="footer-brands">
           <img src="/kegow-logo.png" className="footer-logo" alt="Kegow" />
+          <span className="footer-brands-divider" />
           <img src="/enetworks-logo.jpeg" className="footer-logo footer-logo-square" alt="E-Networks Technologies Ltd" />
         </div>
       </footer>

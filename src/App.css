@@ -654,19 +654,21 @@
   color: var(--guide-orange);
 }
 
-.guide-footer {
-  margin-top: 20px;
-  border-top: 2px solid var(--guide-accent-line);
+.guide-signoff {
+  margin-top: 16px;
   padding-top: 12px;
-  font-size: 12.5px;
-  font-weight: 500;
+  border-top: 1px dashed var(--guide-accent-line);
+}
+
+.guide-signoff p {
+  margin: 0;
 }
 
 .signature-img {
   display: block;
-  width: 120px;
+  width: 110px;
   height: auto;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 .signature {
@@ -675,23 +677,34 @@
   color: var(--guide-green);
 }
 
+.guide-footer {
+  margin-top: 20px;
+  border-top: 2px solid var(--guide-accent-line);
+  padding-top: 14px;
+}
+
 .footer-brands {
-  margin-top: 12px;
-  padding-top: 10px;
-  border-top: 1px solid var(--border);
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: center;
+  gap: 18px;
 }
 
 .footer-logo {
   display: block;
-  height: 20px;
+  height: 24px;
   width: auto;
+  object-fit: contain;
 }
 
 .footer-logo-square {
-  height: 30px;
+  height: 24px;
+}
+
+.footer-brands-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--border);
 }
 
 /* ---------- Print media ---------- */
@@ -797,27 +810,30 @@
     margin-bottom: 1px;
   }
 
-  .guide-footer {
-    margin-top: 8px;
-    padding-top: 6px;
-    font-size: 11px;
+  .guide-signoff {
+    margin-top: 10px;
+    padding-top: 8px;
   }
 
   .signature-img {
-    width: 100px;
+    width: 92px;
+    margin-top: 3px;
+  }
+
+  .guide-footer {
+    margin-top: 10px;
+    padding-top: 8px;
   }
 
   .footer-brands {
-    margin-top: 8px;
-    padding-top: 6px;
-    gap: 10px;
+    gap: 12px;
   }
 
   .footer-logo {
-    height: 16px;
+    height: 18px;
   }
 
   .footer-logo-square {
-    height: 24px;
+    height: 18px;
   }
 }
