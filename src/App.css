@@ -716,8 +716,15 @@
 .footer-brand-label {
   font-size: 12px;
   font-weight: 700;
-  color: var(--guide-red);
   letter-spacing: 0.2px;
+}
+
+.footer-brand-blue {
+  color: var(--guide-accent);
+}
+
+.footer-brand-red {
+  color: var(--guide-red);
 }
 
 /* ---------- Print media ---------- */
