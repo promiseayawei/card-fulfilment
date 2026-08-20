@@ -1,10 +1,12 @@
-import type { SearchCriteria } from '../types'
+import type { SearchCriteria, StatusFilter } from '../types'
 import { emptyCriteria } from '../types'
 
 interface Props {
   criteria: SearchCriteria
   onChange: (criteria: SearchCriteria) => void
   resultCount: number
+  status: StatusFilter
+  onStatusChange: (status: StatusFilter) => void
 }
 
 const FIELDS: { key: keyof SearchCriteria; label: string; placeholder: string }[] = [
@@ -15,7 +17,13 @@ const FIELDS: { key: keyof SearchCriteria; label: string; placeholder: string }[
   { key: 'caregiver', label: 'Caregiver', placeholder: 'e.g. Mr. John Doe' },
 ]
 
-export default function SearchPanel({ criteria, onChange, resultCount }: Props) {
+const STATUS_OPTIONS: { key: StatusFilter; label: string }[] = [
+  { key: 'all', label: 'All' },
+  { key: 'pending', label: 'Pending' },
+  { key: 'done', label: 'Done' },
+]
+
+export default function SearchPanel({ criteria, onChange, resultCount, status, onStatusChange }: Props) {
   return (
     <div className="search-panel">
       <div className="search-grid">
@@ -30,6 +38,21 @@ export default function SearchPanel({ criteria, onChange, resultCount }: Props) 
             />
           </label>
         ))}
+      </div>
+      <div className="status-filter">
+        <span>Status</span>
+        <div className="status-filter-options">
+          {STATUS_OPTIONS.map((opt) => (
+            <button
+              key={opt.key}
+              type="button"
+              className={`status-chip${status === opt.key ? ' status-chip-active' : ''}`}
+              onClick={() => onStatusChange(opt.key)}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
       </div>
       <div className="search-meta">
         <span>{resultCount} record{resultCount === 1 ? '' : 's'}</span>

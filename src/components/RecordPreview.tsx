@@ -49,7 +49,7 @@ export default function RecordPreview({ record, loading, onPrintThis }: Props) {
         <Row label="LGA" value={record.lga} />
       </div>
       <button type="button" className="btn-primary" onClick={() => onPrintThis(record.id)}>
-        Print this record
+        {record.done ? 'Reprint this record' : 'Print this record'}
       </button>
     </div>
   )

@@ -28,3 +28,5 @@ export const emptyCriteria: SearchCriteria = {
   school: '',
   caregiver: '',
 }
+
+export type StatusFilter = 'all' | 'pending' | 'done'

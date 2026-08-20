@@ -15,7 +15,7 @@ import {
   toCardRecord,
 } from './lib/api'
 import { getPrintApi, type PrinterInfo } from './lib/printApi'
-import { emptyCriteria, type CardRecord, type SearchCriteria } from './types'
+import { emptyCriteria, type CardRecord, type SearchCriteria, type StatusFilter } from './types'
 
 const printApi = getPrintApi()
 const PER_PAGE = 50
@@ -23,6 +23,7 @@ const PER_PAGE = 50
 export default function App() {
   const [serverOnline, setServerOnline] = useState<boolean | null>(null)
   const [criteria, setCriteria] = useState<SearchCriteria>(emptyCriteria)
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [records, setRecords] = useState<CardRecord[]>([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
@@ -170,6 +171,14 @@ export default function App() {
     [printQueue, cacheVersion],
   )
 
+  // Status filtering happens client-side over the current page of results —
+  // the backend search endpoint has no done/pending filter, so this narrows
+  // what's already been fetched rather than issuing a different query.
+  const visibleRecords = useMemo(
+    () => (statusFilter === 'all' ? records : records.filter((r) => (statusFilter === 'done' ? r.done : !r.done))),
+    [records, statusFilter],
+  )
+
   function applyDone(ids: number[]) {
     const now = new Date().toISOString()
     setRecords((prev) => prev.map((r) => (ids.includes(r.id) ? { ...r, done: true, doneAt: now } : r)))
@@ -243,7 +252,7 @@ export default function App() {
   }
 
   function toggleSelectAll() {
-    const visible = records.map((r) => r.id)
+    const visible = visibleRecords.map((r) => r.id)
     const allSelected = visible.length > 0 && visible.every((i) => selected.has(i))
     setSelected((prev) => {
       const next = new Set(prev)
@@ -270,6 +279,8 @@ export default function App() {
   }
 
   const totalPages = Math.max(1, Math.ceil(total / PER_PAGE))
+  const selectedAllDone =
+    selected.size > 0 && [...selected].every((id) => recordCache.current.get(id)?.done)
 
   if (printQueue) {
     return (
@@ -334,11 +345,17 @@ export default function App() {
         </div>
       )}
 
-      <SearchPanel criteria={criteria} onChange={setCriteria} resultCount={total} />
+      <SearchPanel
+        criteria={criteria}
+        onChange={setCriteria}
+        resultCount={total}
+        status={statusFilter}
+        onStatusChange={setStatusFilter}
+      />
 
       <div className="toolbar">
         <button type="button" className="btn-primary" disabled={selected.size === 0} onClick={() => startPrint([...selected])}>
-          Print selected ({selected.size})
+          {selectedAllDone ? 'Reprint' : 'Print'} selected ({selected.size})
         </button>
         <button type="button" className="btn-secondary" onClick={handleExport} disabled={exporting}>
           {exporting ? 'Exporting…' : 'Export current data'}
@@ -352,7 +369,7 @@ export default function App() {
           ) : (
             <>
               <RecordsTable
-                records={records}
+                records={visibleRecords}
                 selected={selected}
                 previewId={previewId}
                 onToggle={toggleSelected}
